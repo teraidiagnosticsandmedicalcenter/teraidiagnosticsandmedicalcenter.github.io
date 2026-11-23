@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: teraidiagnostic-prod-frontend
+    restart: always
+    networks:
+      - calldots_net
+
+networks:
+  calldots_net:
+    external: true

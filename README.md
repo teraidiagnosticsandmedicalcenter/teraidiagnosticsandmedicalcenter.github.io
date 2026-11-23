@@ -97,11 +97,11 @@ git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>
 git push -u origin main
 ```
 
-### Step 3: Enable Free GitHub Pages (Automated)
-1. Go to your repository on GitHub.
-2. Click **Settings** > **Pages** (under Code and automation).
-3. Under **Build and deployment** > **Source**, choose **GitHub Actions**.
-4. The included `.github/workflows/deploy.yml` workflow will automatically build and publish your site! Within 1–2 minutes, your website will be live at `https://<YOUR_GITHUB_USERNAME>.github.io/<YOUR_REPO_NAME>/`.
+### Step 3: Production Domains & CI/CD Deployment
+- **Official Production Domain**: 👉 **https://teraidiagnosticsandmedicalcenter.com** (Served by IONOS VPS `74.208.206.192`)
+- **GitHub Pages (Automatic Forwarding)**: 👉 **https://teraidiagnosticsandmedicalcenter.github.io/** (Automatically redirects visitors to the official domain)
+- **CI/CD Pipeline**: Any push to the `main` branch automatically validates the build, updates GitHub Pages, and executes zero-downtime deployment on the IONOS VPS via GitHub Actions.
+
 
 ---
 
