@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import { Image as ImageIcon, Video, X, ZoomIn, Sparkles, FolderOpen } from "lucide-react";
+import { Image as ImageIcon, X, ZoomIn } from "lucide-react";
 import { galleryData, GalleryItem } from "../data/gallery";
 
 export const GallerySection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
 
-  const tabs = [
+  const availableCategories = new Set(galleryData.map((item) => item.category));
+
+  const allTabs = [
     { id: "all", label: "All Media" },
     { id: "banners", label: "Official Posters & Brochures" },
     { id: "facility", label: "Clinic & Leadership" },
     { id: "videos", label: "Video Walkthroughs" },
   ];
+
+  // Only display tabs that actually have published media items
+  const tabs = allTabs.filter(
+    (tab) => tab.id === "all" || availableCategories.has(tab.id as any)
+  );
 
   const filteredItems = galleryData.filter((item) => {
     if (activeTab === "all") return true;
@@ -36,21 +43,23 @@ export const GallerySection: React.FC = () => {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex items-center justify-center gap-2 flex-wrap mb-10">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`text-xs sm:text-sm font-bold px-4 py-2 rounded-xl transition-all ${
-                activeTab === tab.id
-                  ? "bg-teal-700 text-white shadow-md shadow-teal-700/20"
-                  : "bg-slate-100 hover:bg-slate-200 text-slate-700"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+        {tabs.length > 1 && (
+          <div className="flex items-center justify-center gap-2 flex-wrap mb-10">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`text-xs sm:text-sm font-bold px-4 py-2 rounded-xl transition-all ${
+                  activeTab === tab.id
+                    ? "bg-teal-700 text-white shadow-md shadow-teal-700/20"
+                    : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -87,17 +96,6 @@ export const GallerySection: React.FC = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Easy Upload Note for User */}
-        <div className="mt-12 bg-slate-50 border border-dashed border-teal-300 rounded-3xl p-6 text-center max-w-2xl mx-auto space-y-2">
-          <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-700 mx-auto flex items-center justify-center">
-            <FolderOpen className="w-5 h-5" />
-          </div>
-          <h4 className="font-bold text-sm text-slate-800">Need to Add More Photos or Videos?</h4>
-          <p className="text-xs text-slate-600 max-w-lg mx-auto leading-relaxed">
-            Drop new clinic pictures into <code className="bg-teal-50 text-teal-800 px-1.5 py-0.5 rounded font-mono font-bold">public/uploads/gallery/</code> or facility clips into <code className="bg-teal-50 text-teal-800 px-1.5 py-0.5 rounded font-mono font-bold">public/uploads/videos/</code>. They will immediately render into this gallery!
-          </p>
         </div>
       </div>
 
