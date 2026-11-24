@@ -39,5 +39,13 @@ export const galleryData: GalleryItem[] = [
     type: "image",
     url: "/uploads/leadership/saheb-sah.png",
     caption: "NHPC Registered Technologist (A3912 MLT) & Advocate ensuring clinical diagnostic accuracy."
+  },
+  {
+    id: "leader-photo-bablu",
+    title: "Mr. Bablu Sah Kanu (Managing Director)",
+    category: "facility",
+    type: "image",
+    url: "/uploads/leadership/bablu-sah.jpg",
+    caption: "Managing Director overseeing patient accessibility, community outreach, and home collection operations."
   }
 ];

@@ -232,7 +232,7 @@ _Sent via Terai Diagnostic Website_`;
                   <option>Morning (7:00 AM – 10:00 AM)</option>
                   <option>Midday (10:00 AM – 2:00 PM)</option>
                   <option>Afternoon (2:00 PM – 5:00 PM)</option>
-                  <option>Evening (5:00 PM – 8:00 PM)</option>
+                  <option>Evening (5:00 PM – 10:00 PM)</option>
                 </select>
               </div>
             </div>

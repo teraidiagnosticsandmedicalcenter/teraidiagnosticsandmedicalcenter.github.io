@@ -28,7 +28,7 @@ export const TopBar: React.FC = () => {
 
           <div className="hidden lg:flex items-center gap-1.5 text-teal-100">
             <Clock className="w-3.5 h-3.5 text-teal-300 shrink-0" />
-            <span>7:00 AM – 8:00 PM</span>
+            <span>7:00 AM – 10:00 PM (Everyday)</span>
           </div>
 
           <a

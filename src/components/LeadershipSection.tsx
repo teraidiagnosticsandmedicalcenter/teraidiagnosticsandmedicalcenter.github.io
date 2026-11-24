@@ -1,5 +1,5 @@
 import React from "react";
-import { Award, Phone, ExternalLink, ShieldCheck, Scale, FlaskConical, MessageCircle } from "lucide-react";
+import { Award, Phone, ExternalLink, ShieldCheck, Scale, FlaskConical, MessageCircle, Briefcase, Building } from "lucide-react";
 import { leadershipData } from "../data/leadership";
 import { siteConfig } from "../data/siteConfig";
 
@@ -22,17 +22,17 @@ export const LeadershipSection: React.FC = () => {
         </div>
 
         {/* Leadership Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Mr. Saheb Sah Kanu (Featured Senior Technologist & Legal Advisor) */}
-          <div className="lg:col-span-7 bg-gradient-to-br from-teal-50/60 via-slate-50 to-white rounded-3xl p-6 sm:p-8 border border-teal-100 shadow-md flex flex-col justify-between">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+          {/* 1. Mr. Saheb Sah Kanu (Senior Technologist & Legal Advisor) */}
+          <div className="bg-gradient-to-br from-teal-50/60 via-slate-50 to-white rounded-3xl p-6 sm:p-8 border border-teal-100 shadow-md flex flex-col justify-between">
             <div className="space-y-6">
               {/* Profile Top Row */}
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
                 <div className="relative">
-                  <div className="w-28 h-32 sm:w-32 sm:h-36 rounded-2xl overflow-hidden shadow-lg border-2 border-white ring-4 ring-teal-100/80 shrink-0">
+                  <div className="w-28 h-32 sm:w-32 sm:h-36 rounded-2xl overflow-hidden shadow-lg border-2 border-white ring-4 ring-teal-100/80 shrink-0 bg-slate-100">
                     <img
-                      src="/uploads/leadership/saheb-sah.png"
-                      alt="Mr. Saheb Sah Kanu"
+                      src={leadershipData[0].image}
+                      alt={leadershipData[0].name}
                       className="w-full h-full object-cover object-top"
                     />
                   </div>
@@ -51,12 +51,16 @@ export const LeadershipSection: React.FC = () => {
                   <p className="text-sm font-semibold text-teal-800">
                     {leadershipData[0].nameNepali}
                   </p>
-                  <p className="text-xs font-semibold text-slate-600 flex items-center justify-center sm:justify-start gap-1.5">
-                    <FlaskConical className="w-3.5 h-3.5 text-teal-600" />
-                    <span>B.Sc. MLT Dehradun (UK India)</span>
+                  <p className="text-xs font-semibold text-slate-600 flex items-center justify-center sm:justify-start gap-1.5 flex-wrap">
+                    <span className="inline-flex items-center gap-1">
+                      <FlaskConical className="w-3.5 h-3.5 text-teal-600" />
+                      <span>B.Sc. MLT Dehradun (UK India)</span>
+                    </span>
                     <span>•</span>
-                    <Scale className="w-3.5 h-3.5 text-amber-600" />
-                    <span>L.L.B. (Lawyer)</span>
+                    <span className="inline-flex items-center gap-1">
+                      <Scale className="w-3.5 h-3.5 text-amber-600" />
+                      <span>L.L.B. (Lawyer)</span>
+                    </span>
                   </p>
                   <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
                     <span>Registration:</span>
@@ -85,68 +89,90 @@ export const LeadershipSection: React.FC = () => {
             </div>
 
             {/* Direct Connect Buttons */}
-            <div className="pt-6 mt-6 border-t border-slate-200/80 flex flex-wrap items-center gap-3">
-              <a
-                href={leadershipData[0].facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-xs transition-colors"
-              >
-                <ExternalLink className="w-4 h-4" />
-                <span>Visit Official Facebook Profile</span>
-              </a>
+            <div className="pt-6 mt-6 border-t border-slate-200/80 flex flex-wrap items-center gap-2 sm:gap-3">
+              {leadershipData[0].facebook && (
+                <a
+                  href={leadershipData[0].facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Facebook</span>
+                </a>
+              )}
 
               <a
                 href={`tel:${siteConfig.phones.technologist}`}
-                className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
+                className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold px-3.5 py-2.5 rounded-xl transition-colors"
               >
-                <Phone className="w-4 h-4 text-teal-600" />
-                <span>{siteConfig.phones.technologist}</span>
+                <Phone className="w-3.5 h-3.5 text-teal-600" />
+                <span>Call ({siteConfig.phones.technologist})</span>
               </a>
 
               <a
                 href={`https://wa.me/${leadershipData[0].whatsapp}?text=Namaste%20Mr.%20Saheb%20Sah%2C%20I%20have%20an%20inquiry%20regarding%20tests%20at%20Terai%20Diagnostic.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition-colors"
+                className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-colors"
               >
-                <MessageCircle className="w-4 h-4" />
-                <span>Chat on WhatsApp</span>
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>WhatsApp</span>
               </a>
             </div>
           </div>
 
-          {/* Mr. Bablu Sah Kanu (Managing Director) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-slate-50 via-white to-teal-50/30 rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md flex flex-col justify-between">
+          {/* 2. Mr. Bablu Sah Kanu (Managing Director) */}
+          <div className="bg-gradient-to-br from-emerald-50/40 via-slate-50 to-white rounded-3xl p-6 sm:p-8 border border-emerald-100 shadow-md flex flex-col justify-between">
             <div className="space-y-6">
-              {/* Header */}
-              <div className="space-y-2">
-                <div className="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">
-                  Operations & Community Outreach
+              {/* Profile Top Row */}
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                <div className="relative">
+                  <div className="w-28 h-32 sm:w-32 sm:h-36 rounded-2xl overflow-hidden shadow-lg border-2 border-white ring-4 ring-emerald-100/80 shrink-0 bg-slate-100">
+                    <img
+                      src={leadershipData[1].image}
+                      alt={leadershipData[1].name}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <span className="absolute -bottom-2 -right-2 bg-teal-600 text-white p-1.5 rounded-full shadow-md">
+                    <Briefcase className="w-4 h-4" />
+                  </span>
                 </div>
-                <h3 className="text-2xl font-extrabold text-slate-900">
-                  {leadershipData[1].name}
-                </h3>
-                <p className="text-sm font-semibold text-emerald-800">
-                  {leadershipData[1].nameNepali}
-                </p>
-                <p className="text-xs text-slate-500 font-medium">
-                  Managing Director, Terai Diagnostic & Medical Center
-                </p>
+
+                <div className="space-y-2">
+                  <div className="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">
+                    Managing Director & Operations Head
+                  </div>
+                  <h3 className="text-2xl font-extrabold text-slate-900">
+                    {leadershipData[1].name}
+                  </h3>
+                  <p className="text-sm font-semibold text-emerald-800">
+                    {leadershipData[1].nameNepali}
+                  </p>
+                  <p className="text-xs font-semibold text-slate-600 flex items-center justify-center sm:justify-start gap-1.5">
+                    <Building className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Healthcare Administration & Management</span>
+                  </p>
+                  <div className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md border border-teal-200">
+                    <span>Direct Helpline:</span>
+                    <span>{leadershipData[1].phone}</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Bio */}
-              <div className="space-y-3 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+              {/* Bio & Philosophy */}
+              <div className="space-y-3 text-slate-600 text-sm leading-relaxed border-t border-emerald-100/60 pt-4">
                 <p>{leadershipData[1].bio}</p>
-                <p className="text-xs text-slate-500 italic bg-white p-3 rounded-xl border border-slate-100">
+                <p className="text-xs text-slate-500 italic bg-white/60 p-3 rounded-xl border border-slate-100">
                   "{leadershipData[1].bioNepali}"
                 </p>
               </div>
 
               {/* Highlights */}
-              <div className="space-y-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 {leadershipData[1].highlights.map((h, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-white p-2.5 rounded-xl border border-slate-100">
+                  <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-white p-2 rounded-xl border border-slate-100 shadow-2xs">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                     <span>{h}</span>
                   </div>
@@ -154,15 +180,39 @@ export const LeadershipSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Direct Contact */}
-            <div className="pt-6 mt-6 border-t border-slate-200/80 flex flex-wrap items-center gap-3">
+            {/* Direct Connect Buttons */}
+            <div className="pt-6 mt-6 border-t border-slate-200/80 flex flex-wrap items-center gap-2 sm:gap-3">
+              {leadershipData[1].facebook && (
+                <a
+                  href={leadershipData[1].facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Facebook</span>
+                </a>
+              )}
+
               <a
                 href={`tel:${siteConfig.phones.managingDirector}`}
-                className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-teal-700 to-emerald-700 hover:from-teal-800 hover:to-emerald-800 text-white text-sm font-bold py-3 rounded-xl shadow-xs transition-colors"
+                className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold px-3.5 py-2.5 rounded-xl transition-colors"
               >
-                <Phone className="w-4 h-4" />
-                <span>Call Managing Director ({siteConfig.phones.managingDirector})</span>
+                <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Call ({siteConfig.phones.managingDirector})</span>
               </a>
+
+              {leadershipData[1].whatsapp && (
+                <a
+                  href={`https://wa.me/${leadershipData[1].whatsapp}?text=Namaste%20Mr.%20Bablu%20Sah%2C%20I%20have%20an%20inquiry%20regarding%20tests%20and%20home%20collection%20at%20Terai%20Diagnostic.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
+                </a>
+              )}
             </div>
           </div>
         </div>

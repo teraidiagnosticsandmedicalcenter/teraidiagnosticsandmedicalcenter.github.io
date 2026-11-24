@@ -47,7 +47,8 @@ export const leadershipData: Leader[] = [
     degrees: ["Healthcare Administration & Management"],
     phone: "+977 9827204237",
     whatsapp: "9779827204237",
-    image: "/uploads/leadership/bablu-sah.png",
+    facebook: "https://www.facebook.com/bablu.sah.22241",
+    image: "/uploads/leadership/bablu-sah.jpg",
     bio: "As Managing Director, Mr. Bablu Sah Kanu directs patient accessibility, community outreach, and streamlined clinical operations. Under his leadership, Terai Diagnostic introduced patient-friendly home blood collection services and special discounted testing for families across Birgunj and surrounding districts.",
     bioNepali: "प्रबन्ध निर्देशक श्री बब्लु साह कानुको कुशल व्यवस्थापनमा केन्द्रले बिरामी-केन्द्रित सेवा, सुपथ मूल्यमा छुटको सुविधा र घरमै पुगेर रगत संकलन (Home Collection) सेवा प्रदान गर्दै आएको छ ।",
     highlights: [

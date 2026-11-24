@@ -96,7 +96,7 @@ export const Footer: React.FC = () => {
               </p>
               <p className="flex items-center gap-2 text-slate-400">
                 <Clock className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>Daily: 7:00 AM – 8:00 PM</span>
+                <span>Everyday: 7:00 AM – 10:00 PM</span>
               </p>
             </div>
 

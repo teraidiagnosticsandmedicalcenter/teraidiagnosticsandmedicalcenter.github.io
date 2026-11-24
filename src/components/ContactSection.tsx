@@ -89,7 +89,7 @@ export const ContactSection: React.FC = () => {
               <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-card space-y-2">
                 <Clock className="w-5 h-5 text-teal-600" />
                 <h4 className="font-bold text-slate-800 text-sm">Working Hours</h4>
-                <p className="text-xs text-slate-600">Everyday: 7:00 AM – 8:00 PM</p>
+                <p className="text-xs text-slate-600">Everyday: 7:00 AM – 10:00 PM</p>
                 <p className="text-[11px] text-emerald-700 font-semibold">Home collection on call</p>
               </div>
 

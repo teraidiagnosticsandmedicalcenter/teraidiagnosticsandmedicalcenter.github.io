@@ -60,13 +60,13 @@ export const siteConfig: SiteConfig = {
     managingDirector: "+977 9827204237",
   },
   whatsapp: "9779816295312",
-  email: "tdmcbrj@gmail.com",
+  email: "teraidiagnosticsmedicalcenter@gmail.com",
   socials: {
     facebook: "https://www.facebook.com/saheb.sah.855687",
   },
   hours: {
     days: "Sunday – Saturday (Everyday)",
-    timing: "7:00 AM – 8:00 PM",
+    timing: "7:00 AM – 10:00 PM",
     emergency: "Home sample collection available on call",
   },
   features: {

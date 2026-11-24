@@ -215,8 +215,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigateToTests }) 
           </div>
           <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center">
             <div className="text-2xl sm:text-3xl font-extrabold text-teal-700">7 Days</div>
-            <div className="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Open 7 AM – 8 PM</div>
-            <div className="text-[11px] text-slate-500">Main Road Birta, Birgunj</div>
+            <div className="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Open 7 AM – 10 PM</div>
+            <div className="text-[11px] text-slate-500">Everyday • Birta, Birgunj</div>
           </div>
         </div>
       </div>
