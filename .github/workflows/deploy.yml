@@ -1,4 +1,4 @@
-name: CI/CD Pipeline (Build & IONOS VPS Deploy)
+name: CI/CD Pipeline (Build, GitHub Pages & IONOS VPS Deploy)
 
 on:
   push:
@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: "deploy-${{ github.ref }}"
@@ -37,8 +39,34 @@ jobs:
       - name: Build Static Production Assets
         run: npm run build
 
+      - name: Setup GitHub Pages
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        uses: actions/configure-pages@v4
+
+      - name: Upload Pages Artifact
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
   # =========================================================================
-  # 2. CD - Zero-Downtime Deploy to IONOS VPS
+  # 2. CD - Deploy to GitHub Pages (Maintains access & auto-forwards to .com)
+  # =========================================================================
+  deploy-github-pages:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # =========================================================================
+  # 3. CD - Zero-Downtime Deploy to IONOS VPS
   # =========================================================================
   deploy-vps:
     name: Zero-Downtime Deploy to IONOS VPS
