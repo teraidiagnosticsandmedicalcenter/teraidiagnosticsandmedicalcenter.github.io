@@ -40,23 +40,23 @@ jobs:
         run: npm run build
 
       - name: Setup GitHub Pages
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && !github.event.repository.private
         uses: actions/configure-pages@v4
 
       - name: Upload Pages Artifact
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && !github.event.repository.private
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
 
   # =========================================================================
-  # 2. CD - Deploy to GitHub Pages (Serves immediate redirect to domain)
+  # 2. CD - Deploy to GitHub Pages (Only runs if repository is public)
   # =========================================================================
   deploy-github-pages:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     needs: [build]
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && !github.event.repository.private
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -83,10 +83,11 @@ jobs:
           port: ${{ secrets.VPS_PORT || 22 }}
           script: |
             if [ ! -d /opt/teraidiagnostics ]; then
-              git clone https://github.com/teraidiagnosticsandmedicalcenter/teraidiagnosticsandmedicalcenter.github.io.git /opt/teraidiagnostics
+              git clone git@github-terai:teraidiagnosticsandmedicalcenter/teraidiagnosticsandmedicalcenter.github.io.git /opt/teraidiagnostics
             fi
             cd /opt/teraidiagnostics
             git config --global --add safe.directory /opt/teraidiagnostics
+            git remote set-url origin git@github-terai:teraidiagnosticsandmedicalcenter/teraidiagnosticsandmedicalcenter.github.io.git
             git fetch origin main
             git reset --hard origin/main
             chmod +x scripts/deploy_production.sh
