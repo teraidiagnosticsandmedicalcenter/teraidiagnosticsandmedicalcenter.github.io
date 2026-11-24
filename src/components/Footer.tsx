@@ -100,7 +100,7 @@ export const Footer: React.FC = () => {
               </p>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-2 flex items-center justify-between flex-wrap gap-3">
               <a
                 href={siteConfig.socials.facebook}
                 target="_blank"
@@ -110,6 +110,30 @@ export const Footer: React.FC = () => {
                 <span>Follow on Facebook</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
+
+              <a
+                href="/uploads/qr/terai-diagnostic-qr.png"
+                download="terai-diagnostic-qr.png"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-400 hover:text-teal-300"
+              >
+                <span>Download Website QR</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+
+            {/* Footer QR Code Snapshot */}
+            <div className="pt-3 border-t border-slate-800 flex items-center gap-3">
+              <div className="w-12 h-12 bg-white p-1 rounded-lg shrink-0">
+                <img
+                  src="/uploads/qr/terai-diagnostic-qr.png"
+                  alt="Website QR"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="text-[11px] text-slate-400">
+                <p className="font-semibold text-slate-200">Scan to visit on mobile</p>
+                <p className="text-[10px] text-slate-500">teraidiagnosticsandmedicalcenter.com</p>
+              </div>
             </div>
           </div>
         </div>

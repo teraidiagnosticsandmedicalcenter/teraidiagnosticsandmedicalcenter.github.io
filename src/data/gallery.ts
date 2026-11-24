@@ -17,12 +17,28 @@ export const galleryData: GalleryItem[] = [
     caption: "Comprehensive services list, leadership credentials, and calendar of Terai Diagnostic & Medical Center."
   },
   {
-    id: "banner-brochure",
-    title: "Patient Services Booklet & Departments",
+    id: "banner-brochure-front",
+    title: "Official Patient Folder Cover & Doctors Directory",
     category: "banners",
     type: "image",
-    url: "/uploads/banners/folder_brochure.jpg",
-    caption: "Overview of 17+ medical departments, pathology, digital X-ray, ultrasound, and home collection details."
+    url: "/uploads/banners/folder_front_cover.jpg",
+    caption: "Official front cover featuring microscope emblem, leadership registration, clinical collage, and patient slip."
+  },
+  {
+    id: "banner-brochure-services",
+    title: "Official 18 Medical Services & Diagnostic Panels",
+    category: "banners",
+    type: "image",
+    url: "/uploads/banners/folder_services_page.jpg",
+    caption: "Detailed brochure listing of all 18 clinical departments, home sample collection, and laboratory imaging facilities."
+  },
+  {
+    id: "clinic-qr-code",
+    title: "Official Clinic QR Code (Scan to Visit)",
+    category: "banners",
+    type: "image",
+    url: "/uploads/qr/terai-diagnostic-official-qr-stand.png",
+    caption: "High-resolution printable QR code stand for clinic front desk, OPD, and patient reports."
   },
   {
     id: "banner-card",

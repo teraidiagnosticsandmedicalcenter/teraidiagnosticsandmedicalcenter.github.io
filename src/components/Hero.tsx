@@ -127,6 +127,26 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigateToTests }) 
                   </span>
                 </div>
 
+                {/* Official Center Brochure / Diagnostic Banner */}
+                <div className="relative rounded-2xl overflow-hidden border border-teal-200/80 shadow-xs group bg-gradient-to-r from-teal-800 to-slate-900">
+                  <img
+                    src="/uploads/banners/hero_brochure_banner.jpg"
+                    alt="Terai Diagnostic & Medical Center Facilities Collage"
+                    className="w-full h-36 sm:h-40 object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/20 to-transparent flex items-end p-3">
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-[11px] font-bold text-white flex items-center gap-1.5 drop-shadow-sm">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Official Diagnostic Facilities & Services
+                      </span>
+                      <span className="text-[10px] font-semibold bg-white/20 backdrop-blur-xs text-teal-100 px-2 py-0.5 rounded-md border border-white/30">
+                        Birgunj-4
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Key Leader Feature Highlight */}
                 <div className="bg-gradient-to-br from-teal-50/80 to-emerald-50/50 rounded-2xl p-4 border border-teal-100 flex items-center gap-4">
                   <img
