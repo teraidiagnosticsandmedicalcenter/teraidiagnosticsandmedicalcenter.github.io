@@ -5,9 +5,10 @@ import { siteConfig } from "../data/siteConfig";
 
 interface TestSearchCatalogProps {
   onOpenBooking: (testName?: string) => void;
+  onSelectTest?: (slug: string) => void;
 }
 
-export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({ onOpenBooking }) => {
+export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({ onOpenBooking, onSelectTest }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
@@ -147,18 +148,44 @@ export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({ onOpenBook
 
                   {/* Title & Nepali */}
                   <div>
-                    <h3 className="font-extrabold text-slate-900 text-base sm:text-lg group-hover:text-teal-700 transition-colors">
-                      {test.name}
-                    </h3>
-                    <p className="text-xs font-semibold text-slate-500 mt-0.5">
-                      {test.nameNepali}
-                    </p>
+                    <a
+                      href={`/tests/${test.id}`}
+                      onClick={(e) => {
+                        if (onSelectTest) {
+                          e.preventDefault();
+                          onSelectTest(test.id);
+                        }
+                      }}
+                      className="block group-hover:text-teal-700 transition-colors"
+                    >
+                      <h3 className="font-extrabold text-slate-900 text-base sm:text-lg">
+                        {test.name}
+                      </h3>
+                      <p className="text-xs font-semibold text-slate-500 mt-0.5">
+                        {test.nameNepali}
+                      </p>
+                    </a>
                   </div>
 
                   {/* Description */}
                   <p className="text-xs text-slate-600 leading-relaxed">
                     {test.description}
                   </p>
+
+                  {/* Pricing Badge */}
+                  <div className="flex items-baseline gap-2 pt-1">
+                    <span className="text-lg font-black text-emerald-700">
+                      NPR {test.discountedPriceNPR}
+                    </span>
+                    {test.priceNPR > test.discountedPriceNPR && (
+                      <span className="text-xs text-slate-400 line-through">
+                        NPR {test.priceNPR}
+                      </span>
+                    )}
+                    <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                      Verified Lab Rate
+                    </span>
+                  </div>
 
                   {/* Test Specs: Fasting, Time & Sample */}
                   <div className="space-y-1.5 pt-2 border-t border-slate-100 text-xs">
@@ -189,18 +216,28 @@ export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({ onOpenBook
                   </div>
                 </div>
 
-                {/* Book Test Action */}
-                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] text-teal-700 font-bold">
-                    Home Collection OK
-                  </span>
+                {/* Actions: Guide Link & Book Test */}
+                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                  <a
+                    href={`/tests/${test.id}`}
+                    onClick={(e) => {
+                      if (onSelectTest) {
+                        e.preventDefault();
+                        onSelectTest(test.id);
+                      }
+                    }}
+                    className="inline-flex items-center gap-1 text-xs font-bold text-teal-700 hover:text-teal-900 transition-colors py-1.5"
+                  >
+                    <span>View Guide & FAQs</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </a>
+
                   <button
                     onClick={() => onOpenBooking(test.name)}
-                    className="inline-flex items-center gap-1.5 bg-teal-50 hover:bg-teal-600 text-teal-800 hover:text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition-all shadow-2xs"
+                    className="inline-flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition-all shadow-xs"
                   >
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>Book Test</span>
-                    <ArrowUpRight className="w-3 h-3" />
+                    <span>Book</span>
                   </button>
                 </div>
               </div>

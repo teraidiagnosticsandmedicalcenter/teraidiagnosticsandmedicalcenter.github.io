@@ -1,0 +1,68 @@
+# ==============================================================================
+# Robots.txt for Terai Diagnostic & Medical Center (Birgunj-4, Nepal)
+# Production Domain: https://teraidiagnosticsandmedicalcenter.com
+# ==============================================================================
+
+# Standard Web Crawlers
+User-agent: *
+Allow: /
+Allow: /tests/
+Allow: /uploads/
+Allow: /sitemap.xml
+Disallow: /api/private/
+Disallow: /admin/
+
+# Google Standard & Extended (AI Overviews, Gemini, Vertex AI)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# OpenAI Crawlers (ChatGPT Search, Browsing, GPT-4o, OAI Search)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Perplexity AI Bot
+User-agent: PerplexityBot
+Allow: /
+
+# Anthropic Claude Crawlers
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Apple AI & Intelligence Crawlers
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Bing & Copilot
+User-agent: Bingbot
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# Meta AI & Common Crawl
+User-agent: FacebookBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Host & Sitemap Directives
+Host: https://teraidiagnosticsandmedicalcenter.com
+Sitemap: https://teraidiagnosticsandmedicalcenter.com/sitemap.xml
+# Alternate Domain Reference: https://trydiagnosticsandmedicalcenter.com/sitemap.xml

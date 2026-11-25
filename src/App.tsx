@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TopBar } from "./components/TopBar";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
@@ -16,10 +16,70 @@ import { ContactSection } from "./components/ContactSection";
 import { Footer } from "./components/Footer";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
 import { BookingModal } from "./components/BookingModal";
+import { GlobalSchema } from "./components/GlobalSchema";
+import { TestDetailPage } from "./components/TestDetailPage";
+import { SectionPageView } from "./components/SectionPageView";
+import { diagnosticTestsData } from "./data/tests";
+
+export type RouteInfo =
+  | { type: "home" }
+  | { type: "test"; slug: string }
+  | { type: "section"; section: "about" | "facilities" | "tests" | "packages" | "departments" | "doctors" | "gallery" | "contact" };
+
+function extractCurrentRoute(): RouteInfo {
+  if (typeof window === "undefined") return { type: "home" };
+
+  // 1. Check query param ?p= (from 404.html redirect)
+  const params = new URLSearchParams(window.location.search);
+  let p = params.get("p") || "";
+  const testParam = params.get("test");
+  if (testParam) return { type: "test", slug: testParam };
+
+  let pathname = p || window.location.pathname;
+  let hash = window.location.hash;
+
+  // Clean trailing slash
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    pathname = pathname.slice(0, -1);
+  }
+
+  // Check test routes: /tests/:slug
+  const testMatch = pathname.match(/\/tests\/([a-zA-Z0-9_-]+)/);
+  if (testMatch && testMatch[1]) {
+    return { type: "test", slug: testMatch[1] };
+  }
+  const hashTestMatch = hash.match(/#\/?tests\/([a-zA-Z0-9_-]+)/);
+  if (hashTestMatch && hashTestMatch[1]) {
+    return { type: "test", slug: hashTestMatch[1] };
+  }
+
+  // Check section routes
+  const sections = ["about", "facilities", "tests", "packages", "departments", "doctors", "gallery", "contact"] as const;
+  for (const sec of sections) {
+    if (pathname === `/${sec}` || hash === `#/${sec}` || hash === `#${sec}`) {
+      return { type: "section", section: sec };
+    }
+  }
+
+  return { type: "home" };
+}
 
 export function App() {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [selectedBookingItem, setSelectedBookingItem] = useState("");
+  const [route, setRoute] = useState<RouteInfo>(extractCurrentRoute);
+
+  useEffect(() => {
+    const onLocationChange = () => {
+      setRoute(extractCurrentRoute());
+    };
+    window.addEventListener("popstate", onLocationChange);
+    window.addEventListener("hashchange", onLocationChange);
+    return () => {
+      window.removeEventListener("popstate", onLocationChange);
+      window.removeEventListener("hashchange", onLocationChange);
+    };
+  }, []);
 
   const handleOpenBooking = (itemName?: string) => {
     setSelectedBookingItem(itemName || "");
@@ -31,71 +91,144 @@ export function App() {
     setSelectedBookingItem("");
   };
 
-  const handleNavigateToTests = () => {
-    const el = document.getElementById("tests");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+  const handleNavigateRoute = (routePath: string) => {
+    try {
+      window.history.pushState({}, "", routePath);
+    } catch {
+      window.location.hash = routePath;
     }
+    setRoute(extractCurrentRoute());
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const handleSelectTest = (slug: string) => {
+    handleNavigateRoute(`/tests/${slug}`);
+  };
+
+  const handleNavigateHome = () => {
+    handleNavigateRoute("/");
+  };
+
+  const currentTest = route.type === "test"
+    ? diagnosticTestsData.find((t) => t.id === route.slug)
+    : null;
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
-      {/* 1. Top Announcement Bar */}
+      {/* Global Schema.org JSON-LD */}
+      <GlobalSchema />
+
+      {/* Top Announcement Bar */}
       <TopBar />
 
-      {/* 2. Main Navigation Header */}
-      <Navbar onOpenBooking={handleOpenBooking} />
+      {/* Main Navigation Header */}
+      <Navbar
+        onOpenBooking={handleOpenBooking}
+        onNavigateRoute={handleNavigateRoute}
+      />
 
-      {/* 3. Hero Section with Optimistic Value Proposition */}
+      {/* Main Content Router */}
       <main className="flex-grow">
-        <Hero
-          onOpenBooking={() => handleOpenBooking("Home Blood Sample Collection")}
-          onNavigateToTests={handleNavigateToTests}
-        />
+        {route.type === "test" && currentTest ? (
+          <TestDetailPage
+            test={currentTest}
+            onOpenBooking={handleOpenBooking}
+            onNavigateHome={handleNavigateHome}
+            onSelectTest={handleSelectTest}
+          />
+        ) : route.type === "section" ? (
+          <SectionPageView
+            sectionId={route.section}
+            onNavigateHome={handleNavigateHome}
+            onNavigateSection={(sec) => handleNavigateRoute(`/${sec}`)}
+            onOpenBooking={handleOpenBooking}
+          >
+            {route.section === "about" && (
+              <>
+                <LeadershipSection />
+                <WhyChooseUs />
+              </>
+            )}
 
-        {/* 4. Home Blood Sample Collection Doorstep Service Spotlight */}
-        <HomeCollectionBanner
-          onOpenBooking={() => handleOpenBooking("Home Blood Sample Collection")}
-        />
+            {route.section === "facilities" && (
+              <FacilitiesSection onOpenBooking={handleOpenBooking} />
+            )}
 
-        {/* 5. Center Leadership & Quality Credentials (Mr. Saheb Sah & Mr. Bablu Sah) */}
-        <LeadershipSection />
+            {route.section === "tests" && (
+              <TestSearchCatalog
+                onOpenBooking={handleOpenBooking}
+                onSelectTest={handleSelectTest}
+              />
+            )}
 
-        {/* 6. Core Diagnostic Facilities (Automated Pathology, X-Ray, USG, Dental, Eye, ECG) */}
-        <FacilitiesSection onOpenBooking={handleOpenBooking} />
+            {route.section === "packages" && (
+              <HealthPackagesSection onOpenBooking={handleOpenBooking} />
+            )}
 
-        {/* 7. Interactive Live Searchable Test Directory */}
-        <TestSearchCatalog onOpenBooking={handleOpenBooking} />
+            {route.section === "departments" && (
+              <DepartmentsSection onOpenBooking={handleOpenBooking} />
+            )}
 
-        {/* 8. Preventive Health Checkup Packages */}
-        <HealthPackagesSection onOpenBooking={handleOpenBooking} />
+            {route.section === "doctors" && (
+              <DoctorsSection onOpenBooking={handleOpenBooking} />
+            )}
 
-        {/* 9. 17+ Medical & Diagnostic Specialist Departments */}
-        <DepartmentsSection onOpenBooking={handleOpenBooking} />
+            {route.section === "gallery" && (
+              <GallerySection />
+            )}
 
-        {/* 10. Consultant Doctors & Visiting OPD Rosters */}
-        <DoctorsSection onOpenBooking={handleOpenBooking} />
+            {route.section === "contact" && (
+              <>
+                <ContactSection />
+                <FaqSection />
+              </>
+            )}
+          </SectionPageView>
+        ) : (
+          /* Full Flagship Homepage */
+          <>
+            <Hero
+              onOpenBooking={() => handleOpenBooking("Home Blood Sample Collection")}
+              onNavigateToTests={() => handleNavigateRoute("/tests")}
+            />
 
-        {/* 11. Center Gallery, Official Posters & Publications */}
-        <GallerySection />
+            <HomeCollectionBanner
+              onOpenBooking={() => handleOpenBooking("Home Blood Sample Collection")}
+            />
 
-        {/* 12. Why Choose Terai Diagnostic & Trust Badges */}
-        <WhyChooseUs />
+            <LeadershipSection />
 
-        {/* 13. Patient FAQ & Preparation Instructions */}
-        <FaqSection />
+            <FacilitiesSection onOpenBooking={handleOpenBooking} />
 
-        {/* 14. Contact Information & Birgunj Map */}
-        <ContactSection />
+            <TestSearchCatalog
+              onOpenBooking={handleOpenBooking}
+              onSelectTest={handleSelectTest}
+            />
+
+            <HealthPackagesSection onOpenBooking={handleOpenBooking} />
+
+            <DepartmentsSection onOpenBooking={handleOpenBooking} />
+
+            <DoctorsSection onOpenBooking={handleOpenBooking} />
+
+            <GallerySection />
+
+            <WhyChooseUs />
+
+            <FaqSection />
+
+            <ContactSection />
+          </>
+        )}
       </main>
 
-      {/* 15. Footer */}
+      {/* Footer */}
       <Footer />
 
-      {/* 16. Persistent Floating WhatsApp Chat Button */}
+      {/* Persistent Floating WhatsApp Chat Button */}
       <FloatingWhatsApp />
 
-      {/* 17. Interactive Zero-Backend Booking Modal */}
+      {/* Interactive Zero-Backend Booking Modal */}
       <BookingModal
         isOpen={isBookingModalOpen}
         onClose={handleCloseBooking}

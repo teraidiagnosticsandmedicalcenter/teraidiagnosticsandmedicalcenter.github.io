@@ -4,28 +4,30 @@ import { siteConfig } from "../data/siteConfig";
 
 interface NavbarProps {
   onOpenBooking: (testName?: string) => void;
+  onNavigateRoute?: (routePath: string) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onNavigateRoute }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: "Home", href: "#home" },
-    { label: "About & Leadership", href: "#leadership" },
-    { label: "Facilities", href: "#facilities" },
-    { label: "Tests Catalog", href: "#tests" },
-    { label: "Health Packages", href: "#packages" },
-    { label: "Departments", href: "#departments" },
-    { label: "Doctors OPD", href: "#doctors" },
-    { label: "Gallery", href: "#gallery" },
-    { label: "Contact", href: "#contact" },
+    { label: "Home", href: "/" },
+    { label: "About & Leadership", href: "/about" },
+    { label: "Facilities", href: "/facilities" },
+    { label: "Tests Catalog", href: "/tests" },
+    { label: "Health Packages", href: "/packages" },
+    { label: "Departments", href: "/departments" },
+    { label: "Doctors OPD", href: "/doctors" },
+    { label: "Gallery", href: "/gallery" },
+    { label: "Contact", href: "/contact" },
   ];
 
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    if (onNavigateRoute) {
+      onNavigateRoute(href);
+    } else {
+      window.location.href = href;
     }
   };
 
@@ -35,11 +37,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
         <div className="flex items-center justify-between h-20">
           {/* Logo & Branding */}
           <a
-            href="#home"
+            href="/"
             className="flex items-center gap-3 group text-left"
             onClick={(e) => {
               e.preventDefault();
-              handleNavClick("#home");
+              handleNavClick("/");
             }}
           >
             <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-teal-50 border border-teal-200/60 p-1.5 shadow-sm group-hover:scale-105 transition-transform duration-300 flex items-center justify-center shrink-0">
@@ -97,37 +99,37 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
             </a>
 
             <button
-              onClick={() => onOpenBooking()}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-md hover:shadow-lg hover:shadow-teal-600/20 transition-all transform active:scale-95"
+              onClick={() => onOpenBooking("Home Blood Sample Collection")}
+              className="inline-flex items-center gap-2 bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm px-4 py-2.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-200"
             >
               <Calendar className="w-4 h-4" />
-              <span>Book Home Collection</span>
+              <span>Book Home Visit</span>
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile Hamburger Toggle */}
+          <div className="flex items-center gap-2 xl:hidden">
             <button
-              onClick={() => onOpenBooking()}
-              className="bg-teal-600 text-white text-xs font-bold px-3 py-2 rounded-lg shadow-sm"
+              onClick={() => onOpenBooking("Quick Appointment")}
+              className="bg-teal-700 text-white p-2 rounded-xl text-xs font-bold sm:hidden"
             >
-              Home Visit
+              Book
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none"
-              aria-label="Toggle navigation menu"
+              className="p-2 rounded-xl text-slate-700 hover:text-teal-700 hover:bg-slate-100 transition-colors"
+              aria-label="Toggle Navigation Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6 text-teal-700" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 shadow-xl">
-          <div className="grid grid-cols-1 gap-1">
+        <div className="xl:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-in fade-in duration-200">
+          <div className="flex flex-col space-y-2">
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -136,32 +138,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
                   e.preventDefault();
                   handleNavClick(link.href);
                 }}
-                className="px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-700 transition-colors flex items-center justify-between"
+                className="px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:text-teal-700 hover:bg-teal-50 transition-colors text-sm"
               >
-                <span>{link.label}</span>
-                <span className="text-xs text-teal-600">→</span>
+                {link.label}
               </a>
             ))}
           </div>
 
-          <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+          <div className="pt-4 border-t border-slate-100 flex flex-col gap-2">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onOpenBooking();
+                onOpenBooking("Home Blood Sample Collection");
               }}
-              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-600 text-white text-sm font-bold py-3 rounded-xl shadow-md"
+              className="w-full flex items-center justify-center gap-2 bg-teal-700 text-white font-bold text-sm py-3 rounded-xl shadow-xs"
             >
               <Calendar className="w-4 h-4" />
-              <span>Request Home Blood Collection</span>
+              <span>Book Home Sample Collection</span>
             </button>
 
             <a
               href={`tel:${siteConfig.phones.primary}`}
-              className="w-full inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold py-2.5 rounded-xl transition-colors"
+              className="w-full flex items-center justify-center gap-2 border border-slate-200 text-slate-700 font-bold text-sm py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
             >
-              <Phone className="w-4 h-4 text-teal-600" />
-              <span>Call Clinic ({siteConfig.phones.primary})</span>
+              <Phone className="w-4 h-4 text-teal-700" />
+              <span>Call Clinic: {siteConfig.phones.primary}</span>
             </a>
           </div>
         </div>
@@ -169,3 +170,5 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
     </header>
   );
 };
+
+export default Navbar;
