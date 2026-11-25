@@ -1,14 +1,21 @@
 import React, { useState, useMemo } from "react";
-import { Search, Clock, AlertTriangle, Check, Sparkles, Calendar, Phone, ArrowUpRight, Filter } from "lucide-react";
+import { Search, Clock, AlertTriangle, Check, Sparkles, Calendar, Phone, ArrowUpRight, Filter, ArrowRight } from "lucide-react";
 import { diagnosticTestsData, DiagnosticTest } from "../data/tests";
 import { siteConfig } from "../data/siteConfig";
 
 interface TestSearchCatalogProps {
   onOpenBooking: (testName?: string) => void;
   onSelectTest?: (slug: string) => void;
+  isTeaser?: boolean;
+  onViewAll?: () => void;
 }
 
-export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({ onOpenBooking, onSelectTest }) => {
+export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({
+  onOpenBooking,
+  onSelectTest,
+  isTeaser,
+  onViewAll
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
@@ -38,6 +45,13 @@ export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({ onOpenBook
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, selectedCategory]);
+
+  const displayedTests = useMemo(() => {
+    if (isTeaser && !searchQuery) {
+      return filteredTests.slice(0, 6);
+    }
+    return filteredTests;
+  }, [filteredTests, isTeaser, searchQuery]);
 
   return (
     <section id="tests" className="py-16 sm:py-20 bg-white">
@@ -101,7 +115,15 @@ export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({ onOpenBook
           {/* Active Results Summary */}
           <div className="flex items-center justify-between text-xs text-slate-500 px-1">
             <span>
-              Showing <strong>{filteredTests.length}</strong> available test{filteredTests.length === 1 ? "" : "s"}
+              {isTeaser && !searchQuery ? (
+                <>
+                  Showing <strong>{displayedTests.length}</strong> popular tests (100+ diagnostic tests available)
+                </>
+              ) : (
+                <>
+                  Showing <strong>{filteredTests.length}</strong> available test{filteredTests.length === 1 ? "" : "s"}
+                </>
+              )}
             </span>
             <span className="text-emerald-700 font-medium">
               ★ {siteConfig.features.discountNoticeNepali}
@@ -128,7 +150,7 @@ export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({ onOpenBook
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredTests.map((test) => (
+            {displayedTests.map((test) => (
               <div
                 key={test.id}
                 className="bg-white rounded-2xl p-6 border border-slate-200 hover:border-teal-400/80 shadow-xs hover:shadow-lg transition-all duration-200 flex flex-col justify-between group"
@@ -242,6 +264,19 @@ export const TestSearchCatalog: React.FC<TestSearchCatalogProps> = ({ onOpenBook
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Teaser CTA */}
+        {isTeaser && onViewAll && (
+          <div className="mt-8 text-center">
+            <button
+              onClick={onViewAll}
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-teal-800 hover:bg-teal-900 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all group"
+            >
+              <span>Explore All 100+ Diagnostic Tests & Full Fee Guide</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
         )}
 

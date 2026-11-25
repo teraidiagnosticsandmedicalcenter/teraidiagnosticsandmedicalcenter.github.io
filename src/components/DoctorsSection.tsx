@@ -5,9 +5,12 @@ import { siteConfig } from "../data/siteConfig";
 
 interface DoctorsProps {
   onOpenBooking: (doctorName?: string) => void;
+  isTeaser?: boolean;
+  onViewAll?: () => void;
 }
 
-export const DoctorsSection: React.FC<DoctorsProps> = ({ onOpenBooking }) => {
+export const DoctorsSection: React.FC<DoctorsProps> = ({ onOpenBooking, isTeaser, onViewAll }) => {
+  const displayedDoctors = isTeaser ? doctorsData.slice(0, 3) : doctorsData;
   return (
     <section id="doctors" className="py-16 sm:py-20 bg-slate-50/70">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,7 +30,7 @@ export const DoctorsSection: React.FC<DoctorsProps> = ({ onOpenBooking }) => {
 
         {/* Doctors Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {doctorsData.map((doc) => (
+          {displayedDoctors.map((doc) => (
             <div
               key={doc.id}
               className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-card hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
@@ -91,6 +94,19 @@ export const DoctorsSection: React.FC<DoctorsProps> = ({ onOpenBooking }) => {
             </div>
           ))}
         </div>
+
+        {/* Teaser CTA */}
+        {isTeaser && onViewAll && (
+          <div className="mt-10 text-center">
+            <button
+              onClick={onViewAll}
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-teal-800 hover:bg-teal-900 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all group"
+            >
+              <span>View Full Doctors OPD Roster & Daily Timings ({doctorsData.length} Specialists)</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        )}
 
         {/* Doctor Schedules Notice */}
         <div className="mt-12 text-center bg-white rounded-2xl p-6 border border-slate-200 shadow-sm max-w-2xl mx-auto space-y-2">

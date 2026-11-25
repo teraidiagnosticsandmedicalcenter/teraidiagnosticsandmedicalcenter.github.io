@@ -6,7 +6,7 @@ export const FloatingWhatsApp: React.FC = () => {
   const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=Namaste%2C%20I%20would%20like%20to%20inquire%20about%20tests%20or%20home%20collection%20at%20Terai%20Diagnostic.`;
 
   return (
-    <aside aria-label="Quick contact" className="fixed bottom-6 right-6 z-40 flex items-center group">
+    <aside aria-label="Quick contact" className="fixed bottom-20 xl:bottom-6 right-4 sm:right-6 z-40 flex items-center group">
       <div className="hidden sm:block mr-3 bg-white text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl shadow-lg border border-slate-100 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
         Chat with our Lab on WhatsApp 💬
       </div>

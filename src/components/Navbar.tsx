@@ -11,15 +11,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onNavigateRoute }
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "About & Leadership", href: "/about" },
-    { label: "Facilities", href: "/facilities" },
-    { label: "Tests Catalog", href: "/tests" },
-    { label: "Health Packages", href: "/packages" },
-    { label: "Departments", href: "/departments" },
-    { label: "Doctors OPD", href: "/doctors" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "Contact", href: "/contact" },
+    { label: "About", mobileLabel: "About & Leadership", href: "/about" },
+    { label: "Tests", mobileLabel: "Tests Catalog (100+)", href: "/tests" },
+    { label: "Packages", mobileLabel: "Health Packages", href: "/packages" },
+    { label: "Doctors", mobileLabel: "Doctors OPD Roster", href: "/doctors" },
+    { label: "Facilities", mobileLabel: "Advanced Lab Facilities", href: "/facilities" },
+    { label: "Departments", mobileLabel: "Clinical Departments", href: "/departments" },
+    { label: "Gallery", mobileLabel: "Photo Gallery", href: "/gallery" },
+    { label: "Contact", mobileLabel: "Contact & Location", href: "/contact" },
   ];
 
   const handleNavClick = (href: string) => {
@@ -34,11 +33,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onNavigateRoute }
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 sm:h-22 py-1">
           {/* Logo & Branding */}
           <a
             href="/"
-            className="flex items-center gap-3 group text-left"
+            className="flex items-center gap-2.5 sm:gap-3 group text-left shrink-0 whitespace-nowrap"
             onClick={(e) => {
               e.preventDefault();
               handleNavClick("/");
@@ -66,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onNavigateRoute }
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden xl:flex items-center gap-6 text-sm font-semibold text-slate-700">
+          <nav className="hidden xl:flex items-center gap-3.5 2xl:gap-5 text-sm font-semibold text-slate-700 whitespace-nowrap">
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -84,12 +83,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onNavigateRoute }
           </nav>
 
           {/* Action CTAs */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2 2xl:gap-3 shrink-0 whitespace-nowrap">
             <a
               href={`tel:${siteConfig.phones.primary}`}
-              className="inline-flex items-center gap-2 text-slate-700 hover:text-teal-700 font-semibold text-sm px-3 py-2 rounded-xl hover:bg-slate-100 transition-colors"
+              className="hidden 2xl:inline-flex items-center gap-2 text-slate-700 hover:text-teal-700 font-semibold text-sm px-3 py-2 rounded-xl hover:bg-slate-100 transition-colors"
             >
-              <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center shrink-0">
                 <Phone className="w-4 h-4" />
               </div>
               <div className="text-left leading-none">
@@ -100,7 +99,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onNavigateRoute }
 
             <button
               onClick={() => onOpenBooking("Home Blood Sample Collection")}
-              className="inline-flex items-center gap-2 bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm px-4 py-2.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm px-3.5 sm:px-4 py-2.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-200 shrink-0"
             >
               <Calendar className="w-4 h-4" />
               <span>Book Home Visit</span>
@@ -140,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onNavigateRoute }
                 }}
                 className="px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:text-teal-700 hover:bg-teal-50 transition-colors text-sm"
               >
-                {link.label}
+                {link.mobileLabel || link.label}
               </a>
             ))}
           </div>

@@ -19,6 +19,8 @@ import { BookingModal } from "./components/BookingModal";
 import { GlobalSchema } from "./components/GlobalSchema";
 import { TestDetailPage } from "./components/TestDetailPage";
 import { SectionPageView } from "./components/SectionPageView";
+import { QuickServiceGateways } from "./components/QuickServiceGateways";
+import { MobileBottomNav } from "./components/MobileBottomNav";
 import { diagnosticTestsData } from "./data/tests";
 
 export type RouteInfo =
@@ -113,6 +115,13 @@ export function App() {
     ? diagnosticTestsData.find((t) => t.id === route.slug)
     : null;
 
+  const currentPath =
+    route.type === "home"
+      ? "/"
+      : route.type === "section"
+        ? `/${route.section}`
+        : `/tests/${route.slug}`;
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
       {/* Global Schema.org JSON-LD */}
@@ -128,7 +137,7 @@ export function App() {
       />
 
       {/* Main Content Router */}
-      <main className="flex-grow">
+      <main className="flex-grow pb-16 xl:pb-0">
         {route.type === "test" && currentTest ? (
           <TestDetailPage
             test={currentTest}
@@ -185,7 +194,7 @@ export function App() {
             )}
           </SectionPageView>
         ) : (
-          /* Full Flagship Homepage */
+          /* Curated Flagship Homepage Hub (Option A) */
           <>
             <Hero
               onOpenBooking={() => handleOpenBooking("Home Blood Sample Collection")}
@@ -196,27 +205,38 @@ export function App() {
               onOpenBooking={() => handleOpenBooking("Home Blood Sample Collection")}
             />
 
-            <LeadershipSection />
+            {/* Direct 4 Clinical Gateways */}
+            <QuickServiceGateways onNavigate={handleNavigateRoute} />
 
-            <FacilitiesSection onOpenBooking={handleOpenBooking} />
-
-            <TestSearchCatalog
+            {/* Curated Health Packages Teaser */}
+            <HealthPackagesSection
+              isTeaser={true}
               onOpenBooking={handleOpenBooking}
-              onSelectTest={handleSelectTest}
+              onViewAll={() => handleNavigateRoute("/packages")}
             />
 
-            <HealthPackagesSection onOpenBooking={handleOpenBooking} />
+            {/* Curated Diagnostic Tests Teaser */}
+            <TestSearchCatalog
+              isTeaser={true}
+              onOpenBooking={handleOpenBooking}
+              onSelectTest={handleSelectTest}
+              onViewAll={() => handleNavigateRoute("/tests")}
+            />
 
-            <DepartmentsSection onOpenBooking={handleOpenBooking} />
+            {/* Curated Consultant Doctors OPD Teaser */}
+            <DoctorsSection
+              isTeaser={true}
+              onOpenBooking={handleOpenBooking}
+              onViewAll={() => handleNavigateRoute("/doctors")}
+            />
 
-            <DoctorsSection onOpenBooking={handleOpenBooking} />
-
-            <GallerySection />
-
+            {/* Why Patients Choose Terai Diagnostic */}
             <WhyChooseUs />
 
+            {/* Frequently Asked Questions */}
             <FaqSection />
 
+            {/* Direct Contact & Visit Hours */}
             <ContactSection />
           </>
         )}
@@ -227,6 +247,13 @@ export function App() {
 
       {/* Persistent Floating WhatsApp Chat Button */}
       <FloatingWhatsApp />
+
+      {/* Sticky Mobile Bottom Navigation Dock (Option C) */}
+      <MobileBottomNav
+        currentPath={currentPath}
+        onNavigate={handleNavigateRoute}
+        onOpenBooking={() => handleOpenBooking("OPD & Lab Booking")}
+      />
 
       {/* Interactive Zero-Backend Booking Modal */}
       <BookingModal
