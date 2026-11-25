@@ -27,3 +27,69 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Lively & Kinetic Healthcare Headline Animations */
+@keyframes kineticWordWave {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-7px) scale(1.02);
+  }
+}
+
+.animate-wave-word-1 {
+  display: inline-block;
+  animation: kineticWordWave 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite 0s;
+}
+
+.animate-wave-word-2 {
+  display: inline-block;
+  animation: kineticWordWave 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.25s;
+}
+
+.animate-wave-word-3 {
+  display: inline-block;
+  animation: kineticWordWave 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.5s;
+}
+
+.animate-wave-word-4 {
+  display: inline-block;
+  animation: kineticWordWave 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.75s;
+}
+
+@keyframes shimmerBeamFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-shimmer-beam {
+  background-size: 200% auto;
+  animation: shimmerBeamFlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseBarGlow {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scaleX(0.88);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.05);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.5);
+  }
+}
+
+.animate-pulse-bar {
+  animation: pulseBarGlow 2.8s ease-in-out infinite;
+}
+
+
+

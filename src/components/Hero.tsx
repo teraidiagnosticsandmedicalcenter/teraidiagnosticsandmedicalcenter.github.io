@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldCheck, Calendar, ArrowRight, Phone, Sparkles, CheckCircle2, Home, HeartPulse, Clock, FileText } from "lucide-react";
+import { Sparkles, CheckCircle2, Home, ArrowRight, Phone, HeartPulse, FileText, Clock } from "lucide-react";
 import { siteConfig } from "../data/siteConfig";
 
 interface HeroProps {
@@ -10,30 +10,44 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigateToTests }) => {
   return (
     <section id="home" className="relative overflow-hidden bg-gradient-to-b from-teal-50/70 via-slate-50 to-white pt-8 pb-16 lg:py-20">
-      {/* Decorative Background Glows */}
+      {/* Decorative Subtle Background Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-br from-teal-200/20 via-emerald-200/20 to-transparent blur-3xl pointer-events-none -z-10" />
       <div className="absolute -top-24 right-0 w-80 h-80 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Heading & Value Proposition */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-            {/* Trust Pill */}
+            {/* Clean Trust Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-100/80 border border-teal-200 text-teal-800 text-xs sm:text-sm font-bold shadow-xs">
               <Sparkles className="w-4 h-4 text-teal-600" />
               <span>{siteConfig.nhpcReg} • Trusted Healthcare in Birgunj</span>
             </div>
 
-            {/* Main Headline */}
-            <div className="space-y-2">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-                Accurate Diagnostics,{" "}
-                <span className="bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-700 bg-clip-text text-transparent">
-                  Compassionate Care.
+            {/* Lively Kinetic Animated Headline */}
+            <div className="space-y-3">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.15]">
+                <span className="inline-block animate-wave-word-1 hover:text-teal-700 transition-colors">
+                  Accurate
+                </span>{" "}
+                <span className="inline-block animate-wave-word-2 hover:text-teal-800 transition-colors">
+                  Diagnostics,
+                </span>{" "}
+                <span className="block mt-1 sm:mt-1.5">
+                  <span className="inline-block animate-wave-word-3 bg-gradient-to-r from-teal-700 via-emerald-400 via-teal-500 to-emerald-600 bg-clip-text text-transparent animate-shimmer-beam filter drop-shadow-xs">
+                    Compassionate
+                  </span>{" "}
+                  <span className="inline-block animate-wave-word-4 bg-gradient-to-r from-teal-700 via-emerald-400 via-teal-500 to-emerald-600 bg-clip-text text-transparent animate-shimmer-beam filter drop-shadow-xs">
+                    Care.
+                  </span>
                 </span>
+
+                {/* Animated Luminous Pulse Underline */}
+                <span className="block h-1 sm:h-1.5 w-36 sm:w-52 mt-2.5 rounded-full bg-gradient-to-r from-teal-600 via-emerald-400 to-teal-500 animate-pulse-bar mx-auto lg:mx-0 shadow-xs" />
               </h1>
-              <p className="text-lg sm:text-xl font-bold text-teal-800 tracking-wide">
-                {siteConfig.nameNepali} ({siteConfig.address.landmarkNepali})
+              <p className="text-lg sm:text-xl font-bold text-teal-800 tracking-wide flex items-center justify-center lg:justify-start gap-2">
+                <span>{siteConfig.nameNepali}</span>
+                <span className="text-xs sm:text-sm font-semibold text-slate-500 font-normal">({siteConfig.address.landmarkNepali})</span>
               </p>
             </div>
 
@@ -46,7 +60,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigateToTests }) 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-sm font-semibold text-slate-700 max-w-xl mx-auto lg:mx-0">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Same-Day WhatsApp & Printed Reports</span>
+                <span>Same-Day WhatsApp &amp; Printed Reports</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -101,7 +115,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigateToTests }) 
             </div>
           </div>
 
-          {/* Right Column: Visual Feature Card & Leadership Teaser */}
+          {/* Right Column: Clean Medical Feature Card */}
           <div className="lg:col-span-5">
             <div className="relative mx-auto max-w-md">
               {/* Decorative Card Backing */}
@@ -173,7 +187,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigateToTests }) 
                     </div>
                     <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-amber-500" />
-                      <span>Dental & Eye</span>
+                      <span>Dental &amp; Eye</span>
                     </div>
                   </div>
                 </div>
@@ -223,3 +237,5 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigateToTests }) 
     </section>
   );
 };
+
+export default Hero;
